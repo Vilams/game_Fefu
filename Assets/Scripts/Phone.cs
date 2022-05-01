@@ -7,13 +7,21 @@ public class Phone : MonoBehaviour
     public GameObject phone;
     private bool PhoneIsOn = false;
 
-    private Transform Menu;
+    private GameObject Menu;
+    private GameObject Message;
+    private GameObject Univer;
+    private GameObject Call;
     void Start()
     {
-        Menu = Object.FindObjectOfType("Menu");
+        phone.SetActive(true);
+        Menu = GameObject.Find("Phone/Phone_Body/Menu");
+        Message = GameObject.Find("Phone/Phone_Body/SMS");
+        Univer = GameObject.Find("Phone/Phone_Body/My_University");
+        Call = GameObject.Find("Phone/Phone_Body/Calls");
+        phone.SetActive(false);
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
@@ -44,16 +52,27 @@ public class Phone : MonoBehaviour
 
     public void Calls ()
     {
-        Debug.Log("Calls");
+        Call.SetActive(true);
+        Menu.SetActive(false);
     }
 
     public void SMS()
     {
-        Debug.Log("SMS!");
+        Message.SetActive(true);
+        Menu.SetActive(false);
     }
 
     public void My_univer()
     {
-        Debug.Log("Unik!");
+        Univer.SetActive(true);
+        Menu.SetActive(false);
+    }
+
+    public void Home()
+    {
+        Menu.SetActive(true);
+        Univer.SetActive(false);
+        Message.SetActive(false);
+        Call.SetActive(false);
     }
 }
