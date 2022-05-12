@@ -4,19 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerFull : MonoBehaviour
-{
+{   
+    [Header("Moving")]
     public float speed;
     public float moveInput_x;
     public float moveInput_y;
     public bool Fasig = true;
     public Rigidbody2D rb;
     
-
+    [Header("Stat")]
     public int HP;
     public Text HP_HUD;
     bool Flag = true;
+    //public GameObject HillBotle;
 
-
+    [Header("TimeHud")]
     public float GameSecond_temp;
     public int GameSecond;
     public int GameMinutes;
@@ -50,20 +52,24 @@ public class PlayerFull : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, moveInput_y * speed );
     }
 
-    void OnTriggerEnter2D(Collider2D coll){
-        if(coll.tag == "Hill"){
-            HP+=25;
-        }
-    }
     
-    void Flip(){
+    
+    void Flip(){   // переворот спарйта персонажа при передвежении в обратеную сторону 
         Fasig= !Fasig;
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale=Scaler;
     }
-    
-    void TimeBar()
+    void OnTriggerEnter2D(Collider2D coll){
+        if(coll.tag == "Hill"){
+            HP+=10;
+            Destroy(coll.gameObject);
+
+        }
+    }
+
+
+    void TimeBar() // худ времени 
     {
         GameSecond_temp += Time.deltaTime;
 
@@ -87,7 +93,7 @@ public class PlayerFull : MonoBehaviour
        TimeHUD.text =  stringMinutes + ":" + stringSecond;
     }
     
-    void HP_Bar(){
+    void HP_Bar(){ // худ хп    
        
        if(GameSecond%2==0 && Flag){
            HP--;
